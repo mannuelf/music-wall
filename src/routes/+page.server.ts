@@ -1,15 +1,14 @@
 import { error } from '@sveltejs/kit';
 import LastFmApi from 'lastfm-nodejs-client';
 import type { User } from 'lastfm-nodejs-client/@types';
-import type { Actions } from './$types';
 
-export const actions = {
-	default: async () => {}
-} satisfies Actions;
-
-export const load = async ({ params }) => {
+export const load = async ({ url }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
+	const username = url.searchParams.get('q');
+	if (username) {
+		config.username = username;
+	}
 
 	const getUser = async (): Promise<User> => {
 		const { user } = await lastFm.getInfo(method.user.getInfo, config.username, 'overall', '');
