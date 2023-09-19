@@ -1,25 +1,7 @@
-import { error } from '@sveltejs/kit';
-import LastFmApi from 'lastfm-nodejs-client';
-import type { User } from 'lastfm-nodejs-client/@types';
+import type { LayoutServerLoad } from './$types';
 
-export const load = async ({ url }) => {
-	const lastFm = LastFmApi();
-	const { config, method } = lastFm;
-	const username = url.searchParams.get('q');
-	if (username) {
-		config.username = username;
-	}
-
-	const getUser = async (): Promise<User> => {
-		const { user } = await lastFm.getInfo(method.user.getInfo, config.username, 'overall', '');
-		return user;
-	};
-
-	if (!getUser()) {
-		throw error(404, 'User not found');
-	}
-
+export const load: LayoutServerLoad = async (): Promise<Record<string, any>> => {
 	return {
-		user: await getUser()
+		welcome: `Hello world!`
 	};
 };

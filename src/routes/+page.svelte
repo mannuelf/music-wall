@@ -4,7 +4,6 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: user = data ? data.user : null;
 
 	let searchQuery = '';
 	let currentSearchTerm = '';
@@ -15,24 +14,18 @@
 			currentSearchTerm = urlParams.get('q') || '';
 		}
 
+		console.log(searchQuery, currentSearchTerm);
 		if (searchQuery.trim() === currentSearchTerm.trim()) return;
 
-		await goto(`/?q=${encodeURIComponent(searchQuery.trim())}`, {
+		await goto(`/${encodeURIComponent(searchQuery.trim())}`, {
 			invalidateAll: true
 		});
 	};
 </script>
 
+<h1>{data.welcome}</h1>
 <form method="post" on:submit|preventDefault={handleSubmit}>
-	<label for="username">lastFm username</label>
+	<label for="username">LastFm username</label>
 	<input bind:value={searchQuery} type="text" name="search" placeholder="Type lastFm username" />
-	<button>GET MY DATA</button>
+	<button>GET MY STATS</button>
 </form>
-
-{#if user}
-	<img src={user.image[3]['#text']} alt={user.name} />
-	<h1>{user.realname}</h1>
-	<p>{user.name}</p>
-	<p>{user.country}</p>
-	<p>{user.playcount}</p>
-{/if}
