@@ -36,6 +36,7 @@
   "type": "module",
   "module": "index.ts",
   "dependencies": {
+    "@sveltejs/adapter-netlify": "next",
     "lastfm-nodejs-client": "^1.2.4"
   }
 }
