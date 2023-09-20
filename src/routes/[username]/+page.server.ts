@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import LastFmApi from 'lastfm-nodejs-client';
 import type { User } from 'lastfm-nodejs-client/@types';
+export const prerender = false;
 
 export const load = async ({ params }) => {
 	const lastFm = LastFmApi();

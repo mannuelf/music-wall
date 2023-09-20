@@ -1,6 +1,6 @@
-import type { LayoutServerLoad } from './$types';
+export const prerender = false;
 
-export const load: LayoutServerLoad = async (): Promise<Record<string, any>> => {
+export const load = async () => {
 	return {
 		welcome: `Hello world!`
 	};
