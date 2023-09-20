@@ -21,6 +21,6 @@ export const load = async ({ params }) => {
 	};
 
 	return {
-		user: await getUser()
+		user: getUser()
 	};
 };
