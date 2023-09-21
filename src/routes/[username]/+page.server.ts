@@ -20,7 +20,7 @@ export const load = async ({ params }) => {
 		}
 	};
 
-	const getTopArtists = async (): Promise<TopArtistsResponse> => {
+	const getTopArtists = async (): Promise<TopArtistsResponse | undefined> => {
 		try {
 			return await lastFm.getTopArtists(method.user.top_artists, config.username, 'overall', '50');
 		} catch (err) {
