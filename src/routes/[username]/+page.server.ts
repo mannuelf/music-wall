@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import LastFmApi from 'lastfm-nodejs-client';
-import type { User } from 'lastfm-nodejs-client/@types';
+import type { TopArtistsResponse, UserResponse } from 'lastfm-nodejs-client/@types';
 export const prerender = false;
 
 export const load = async ({ params }) => {
@@ -11,16 +11,26 @@ export const load = async ({ params }) => {
 		config.username = params.username;
 	}
 
-	const getUser = async (): Promise<User> => {
+	const getUser = async (): Promise<UserResponse> => {
 		try {
-			const { user } = await lastFm.getInfo(method.user.getInfo, config.username);
-			return user;
+			return await lastFm.getInfo(method.user.getInfo, config.username);
 		} catch (err) {
+			console.log(err);
 			throw error(404, `User: ${config.username} not found`);
 		}
 	};
 
+	const getTopArtists = async (): Promise<TopArtistsResponse> => {
+		try {
+			return await lastFm.getTopArtists(method.user.top_artists, config.username, 'overall', '50');
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no artists found not found`);
+		}
+	};
+
 	return {
-		user: getUser()
+		user: getUser(),
+		artists: getTopArtists()
 	};
 };

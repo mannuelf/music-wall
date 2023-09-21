@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-  console.log("🚀 ~ file: +error.svelte:3 ~ page:", page)
-  
 </script>
 
 {#if $page.status === 404}
