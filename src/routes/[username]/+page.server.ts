@@ -1,6 +1,10 @@
 import { error } from '@sveltejs/kit';
 import LastFmApi from 'lastfm-nodejs-client';
-import type { TopArtistsResponse, UserResponse } from 'lastfm-nodejs-client/@types';
+import type {
+	RecentTracksResponse,
+	TopArtistsResponse,
+	UserResponse
+} from 'lastfm-nodejs-client/@types';
 export const prerender = false;
 
 export const load = async ({ params }) => {
@@ -20,7 +24,7 @@ export const load = async ({ params }) => {
 		}
 	};
 
-	const getTopArtists = async (): Promise<TopArtistsResponse | undefined> => {
+	const getTopArtists = async (): Promise<TopArtistsResponse> => {
 		try {
 			return await lastFm.getTopArtists(method.user.top_artists, config.username, 'overall', '50');
 		} catch (err) {
@@ -29,8 +33,22 @@ export const load = async ({ params }) => {
 		}
 	};
 
+	const getRecentTracks = async (): Promise<RecentTracksResponse> => {
+		try {
+			return await lastFm.getRecentTracks(
+				method.user.recent_tracks,
+				config.username,
+				'overall',
+				'50'
+			);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no recent tracks found not found`);
+		}
+	};
 	return {
 		user: getUser(),
-		artists: getTopArtists()
+		artists: getTopArtists(),
+		recentTracks: getRecentTracks()
 	};
 };

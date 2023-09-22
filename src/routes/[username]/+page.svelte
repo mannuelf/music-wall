@@ -5,15 +5,16 @@
 
 	export let data: PageData;
 
-	$: user = data.user?.user;
-	$: artists = data.artists?.topartists.artist;
+	$: user = data.user.user;
+	$: artists = data.artists.topartists.artist;
+	$: recentTracks = data.recentTracks.recenttracks.track;
 
 	function handleImage(image: string) {
 		if (image === '') return fallBackImage;
 		return image;
 	}
 
-	function handleArtistImage(images: Image[]): string {
+	function handleCoverArt(images: Image[]): string {
 		if (images.length === 0) return fallBackImage;
 		return images
 			.map((image) => {
@@ -45,8 +46,25 @@
 		{#each artists as artist}
 			<h3>{artist.name}</h3>
 			{#if artist.image}
-				<img src={handleArtistImage(artist.image)} alt={artist.name} />
+				<img src={handleCoverArt(artist.image)} alt={artist.name} />
 			{/if}
 		{/each}
 	{/if}
 </section>
+
+<section>
+	<h2>Recent Tracks</h2>
+	{#if recentTracks}
+		{#each recentTracks as track}
+			<h3>{track.name}</h3>
+			<p>{track.artist['#text']}</p>
+			<p>{track.album['#text']}</p>
+			<p>{track.date['#text']}</p>
+			{#if track.image}
+				<img src={handleCoverArt(track.image)} alt={track.name} />
+			{/if}
+		{/each}
+	{/if}
+</section>
+
+
