@@ -1,3 +1,3 @@
 <script lang="ts"></script>
 
-<h1>Welcome</h1>
+<h1>Spotify</h1>
