@@ -15,7 +15,7 @@
 		"test:unit": "vitest"
 	},
 	"dependencies": {
-		"lastfm-nodejs-client": "^1.3.0"
+		"lastfm-nodejs-client": "^1.4.0"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.38.0",

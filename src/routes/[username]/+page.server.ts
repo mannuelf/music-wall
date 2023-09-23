@@ -5,9 +5,9 @@ import type {
 	TopArtistsResponse,
 	UserResponse
 } from 'lastfm-nodejs-client/@types';
-export const prerender = false;
+import type { PageServerLoad } from './$types';
 
-export const load = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
 
@@ -26,7 +26,12 @@ export const load = async ({ params }) => {
 
 	const getTopArtists = async (): Promise<TopArtistsResponse> => {
 		try {
-			return await lastFm.getTopArtists(method.user.top_artists, config.username, 'overall', '50');
+			return await lastFm.getTopArtists(
+				method.user.getTopArtists,
+				config.username,
+				'overall',
+				'50'
+			);
 		} catch (err) {
 			console.log(err);
 			throw error(404, `no artists found not found`);
@@ -36,7 +41,7 @@ export const load = async ({ params }) => {
 	const getRecentTracks = async (): Promise<RecentTracksResponse> => {
 		try {
 			return await lastFm.getRecentTracks(
-				method.user.recent_tracks,
+				method.user.getRecentTracks,
 				config.username,
 				'overall',
 				'50'
@@ -46,9 +51,12 @@ export const load = async ({ params }) => {
 			throw error(404, `no recent tracks found not found`);
 		}
 	};
+
 	return {
-		user: getUser(),
-		artists: getTopArtists(),
-		recentTracks: getRecentTracks()
+		streamed: {
+			user: await Promise.resolve(getUser()),
+			artists: await Promise.resolve(getTopArtists()),
+			recentTracks: await Promise.resolve(getRecentTracks())
+		}
 	};
 };
