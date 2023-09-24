@@ -3,7 +3,7 @@
 </script>
 
 <LightSwitch />
-<span>/</span>
+<span> | </span>
 <a class="btn btn-sm variant-ghost-surface" href="/lastfm">LastFm</a>
 <a class="btn btn-sm variant-ghost-surface" href="/spotify">Spotify</a>
 <a
