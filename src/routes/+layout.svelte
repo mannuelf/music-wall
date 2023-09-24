@@ -23,7 +23,7 @@
 					class="btn btn-sm variant-ghost-surface"
 					href="/spotify"
 				>
-					Twitter
+					Spotify
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
