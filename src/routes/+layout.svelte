@@ -3,7 +3,6 @@
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 </script>
 
-
 <!-- App Shell -->
 <AppShell>
 	<svelte:fragment slot="header">
