@@ -6,7 +6,7 @@ export default defineConfig({
 	plugins: [sveltekit(), purgeCss()],
 	build: {
 		commonjsOptions: {
-			include: [/node_modules/]
+			include: ['node_modules']
 		}
 	},
 	test: {
