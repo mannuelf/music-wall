@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import LastFmApi from 'lastfm-nodejs-client';
 import type {
+	LoveTracksResponse,
 	RecentTracksResponse,
 	TopArtistsResponse,
 	UserResponse
@@ -24,13 +25,13 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getTopArtists = async (): Promise<TopArtistsResponse> => {
+	const getTopArtists = async (limit: string): Promise<TopArtistsResponse> => {
 		try {
 			return await lastFm.getTopArtists(
 				method.user.getTopArtists,
 				config.username,
 				'overall',
-				'50'
+				limit
 			);
 		} catch (err) {
 			console.log(err);
@@ -38,13 +39,13 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getRecentTracks = async (): Promise<RecentTracksResponse> => {
+	const getRecentTracks = async (limit: string): Promise<RecentTracksResponse> => {
 		try {
 			return await lastFm.getRecentTracks(
 				method.user.getRecentTracks,
 				config.username,
 				'overall',
-				'50'
+				limit
 			);
 		} catch (err) {
 			console.log(err);
@@ -52,11 +53,33 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
+	const getLovedTracks = async (limit: string): Promise<LoveTracksResponse> => {
+		try {
+			return await lastFm.getLovedTracks(
+				method.user.getLovedTracks,
+				config.username,
+				'overall',
+				limit
+			);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no loved tracks found not found`);
+		}
+	};
+
 	return {
 		streamed: {
+			artists: await Promise.resolve(getTopArtists('10')),
+			lovedTracks: await Promise.resolve(getLovedTracks('10')),
+			recentTracks: await Promise.resolve(getRecentTracks('10')),
+			topAlbums: [],
+			topArtists: [],
+			topTracks: [],
 			user: await Promise.resolve(getUser()),
-			artists: await Promise.resolve(getTopArtists()),
-			recentTracks: await Promise.resolve(getRecentTracks())
+			weeklyAlbumChart: [],
+			weeklyArtistChart: [],
+			weeklyChartList: [],
+			weeklyTrackChart: []
 		}
 	};
 };
