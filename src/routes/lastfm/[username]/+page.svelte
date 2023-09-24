@@ -1,9 +1,9 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
 	import type { PageData } from './$types';
-	import AlbumCard from '$lib/components/albumCard/albumCard.svelte';
-	import ArtistCard from '$lib/components/artistCard/artistCard.svelte';
-	import LoadingIcon from '$lib/components/loadingIcon/loadingIcon.svelte';
+	import AlbumCard from '$lib/components/albumCard/AlbumCard.svelte';
+	import ArtistCard from '$lib/components/artistCard/ArtistCard.svelte';
+	import LoadingIcon from '$lib/components/loadingIcon/LoadingIcon.svelte';
 
 	export let data: PageData;
 
@@ -66,7 +66,7 @@
 	{/await}
 </section>
 
-<style lang="css">
+<style>
 	section {
 		background-color: var(--mint-cream);
 		padding: 0;

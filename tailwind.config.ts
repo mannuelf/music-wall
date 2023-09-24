@@ -3,13 +3,12 @@ import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 import { skeleton } from '@skeletonlabs/tw-plugin';
+import { skeletonCustomTheme } from './skeletonCustomTheme';
 
 const config = {
-	// 2. Opt for dark mode to be handled via the class method
 	darkMode: 'class',
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
-		// 3. Append the path to the Skeleton package
 		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
 	theme: {
@@ -20,12 +19,7 @@ const config = {
 		typography,
 		skeleton({
 			themes: {
-				preset: [
-					{
-						name: 'gold-nouveau',
-						enhancements: true
-					}
-				]
+				custom: [skeletonCustomTheme]
 			}
 		})
 	]
