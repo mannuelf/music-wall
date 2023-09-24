@@ -2,6 +2,7 @@
 	import Navigation from '$lib/components/navigation/Navigation.svelte';
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
+	
 </script>
 
 <!-- App Shell -->
