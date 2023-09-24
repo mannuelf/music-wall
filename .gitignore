@@ -11,3 +11,8 @@ vite.config.ts.timestamp-*
 
 # Local Netlify folder
 .netlify
+
+# Ignore files for PNPM, NPM and YARN
+pnpm-lock.yaml
+package-lock.json
+yarn.lock

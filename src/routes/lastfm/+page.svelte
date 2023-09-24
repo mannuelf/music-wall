@@ -13,7 +13,7 @@
 
 		if (searchQuery.trim() === currentSearchTerm.trim()) return;
 
-		await goto(`/${encodeURIComponent(searchQuery.trim())}`, {
+		await goto(`lastfm/${encodeURIComponent(searchQuery.trim())}`, {
 			invalidateAll: true
 		});
 	};

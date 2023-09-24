@@ -1,6 +1,45 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import '../app.postcss';
+	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
+</script>
 
-<slot />
+
+<!-- App Shell -->
+<AppShell>
+	<svelte:fragment slot="header">
+		<!-- App Bar -->
+		<AppBar>
+			<svelte:fragment slot="lead">
+				<strong class="text-xl uppercase">MUSIC WALL</strong>
+			</svelte:fragment>
+			<svelte:fragment slot="trail">
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="/lastfm"
+				>
+					LastFm
+				</a>
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="/spotify"
+				>
+					Twitter
+				</a>
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="https://github.com/mannuelf/music-wall"
+					target="_blank"
+					rel="noreferrer"
+				>
+					GitHub
+				</a>
+			</svelte:fragment>
+		</AppBar>
+	</svelte:fragment>
+	<!-- Page Route Content -->
+	<slot />
+</AppShell>
+
 
 <style lang="css">
 	/* coolors.co https://coolors.co/1a535c-4ecdc4-f7fff7-ff6b6b-ffe66d */
