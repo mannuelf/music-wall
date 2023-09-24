@@ -1,8 +1,7 @@
-
-
 <div class="card">
-	<slot><!-- optional fallback --></slot>
+	<slot />
 </div>
+
 <style>
 	.card {
 		width: 16rem;

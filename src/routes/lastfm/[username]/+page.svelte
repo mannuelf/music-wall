@@ -21,7 +21,7 @@
 	<h1>SCROBBLES</h1>
 </section>
 
-<!-- <section>
+<section>
 	<h2>Profile</h2>
 	{#await user}
 		<LoadingIcon />
@@ -35,7 +35,7 @@
 	{:catch error}
 		<p>{error.message}</p>
 	{/await}
-</section> -->
+</section>
 
 <section>
 	<h2>Recent Tracks</h2>
