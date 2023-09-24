@@ -14,37 +14,29 @@
 	}
 </script>
 
-<div class="card">
+<article class="card">
 	{#if track.image}
 		<img src={handleCoverArt(track.image)} alt={track.name} />
 	{/if}
 	<div class="card-content">
-		<div><h3>{track.name}</h3></div>
+		{#if track.name}<h3>{track.name}</h3>{/if}
 		<div class="card-content-info">
 			<p>
-				{track.artist['#text']} <br />
-				{track.album['#text']}
+				{#if track.artist}{track.artist['#text']} <br />{/if}
+				{#if track.album}{track.album['#text']}{/if}
 			</p>
-			<a href={track.url} target="_blank"> Find out more </a>
+			{#if track.url}<a href={track.url} target="_blank">Find out more</a>{/if}
 		</div>
 	</div>
-</div>
+</article>
 
 <style>
 	.card {
-		width: 16rem;
-		height: 16rem;
-		border-radius: 0px;
+		width: 220px;
+		height: 220px;
 		overflow: hidden;
 		cursor: pointer;
 		position: relative;
-		color: var(--mint-cream);
-		background-color: var(--naples-yellow);
-	}
-
-	.card a:link,
-	.card a:visited {
-		color: var(--mint-cream);
 	}
 
 	.card img {

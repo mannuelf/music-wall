@@ -18,5 +18,7 @@
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
-	<slot />
+	<section class="p-4">
+		<slot><!-- optional fallback --></slot>
+	</section>
 </AppShell>
