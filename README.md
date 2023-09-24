@@ -8,6 +8,12 @@ pnpm install
 
 ## Developing
 
+### Frameworks
+
+- [SvelteKit](https://kit.svelte.dev/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Skeleton Dev](https://www.skeleton.dev/)
+
 Once you've installed dependencies with `pnpm install` or `npm install`, start a development server.
 
 ```bash
@@ -20,6 +26,7 @@ pnpm run dev -- --open
 ### Environment Variables
 
 Copy the `.env.example` file to `.env` and fill in the values.
+
 
 ## Building
 
