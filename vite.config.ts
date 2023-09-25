@@ -4,11 +4,14 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [sveltekit(), purgeCss()],
-	build: {
-		commonjsOptions: {
-			include: ['node_modules']
-		}
+	optimizeDeps: {
+		include: ['lastfm-nodejs-client']
 	},
+	// build: {
+	// 	commonjsOptions: {
+	// 		include: [/lastfm-nodejs-client/]
+	// 	}
+	// },
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
