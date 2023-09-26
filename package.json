@@ -14,7 +14,6 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest"
 	},
-	"packageManager": "pnpm@6.3.2",
 	"dependencies": {
 		"lastfm-nodejs-client": "^1.4.2"
 	},
