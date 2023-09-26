@@ -12,6 +12,7 @@
 	$: artists = data.streamed.artists.topartists.artist;
 	$: recentTracks = data.streamed.recentTracks.recenttracks.track;
 	$: lovedTracks = data.streamed.lovedTracks.lovedtracks.track;
+	$: weeklyTrackCharts = data.streamed.weeklyTrackChart.weeklytrackchart.track;
 
 	function handleImage(image: string) {
 		if (image === '') return fallBackImage;
@@ -76,6 +77,21 @@
 	</section>
 
 	<section>
+		<h2>Weekly track charts</h2>
+		{#await weeklyTrackCharts}
+			<LoadingIcon />
+		{:then weeklyTrackCharts}
+			<div class="grid">
+				{#each weeklyTrackCharts as track}
+					<AlbumCard {track} />
+				{/each}
+			</div>
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</section>
+
+	<section>
 		<h2>Top Artists</h2>
 		{#await artists}
 			<LoadingIcon />
@@ -99,7 +115,7 @@
 
 	.grid {
 		display: grid;
-		gap: 0rem;
+		gap: 1rem;
 		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	}
 </style>

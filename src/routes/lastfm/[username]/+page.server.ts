@@ -4,8 +4,9 @@ import type {
 	LoveTracksResponse,
 	RecentTracksResponse,
 	TopArtistsResponse,
-	UserResponse
-} from 'lastfm-nodejs-client/@types';
+	UserResponse,
+	WeeklyTrackChartResponse
+} from 'lastfm-nodejs-client/dist/@types';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -67,6 +68,20 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
+	const getWeeklyTrackChart = async (limit: string): Promise<WeeklyTrackChartResponse> => {
+		try {
+			return await lastFm.getWeeklyTrackChart(
+				method.user.getWeeklyTrackChart,
+				config.username,
+				'overall',
+				limit
+			);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no weekly track chart found not found`);
+		}
+	};
+
 	return {
 		streamed: {
 			artists: await Promise.resolve(getTopArtists('10')),
@@ -76,10 +91,10 @@ export const load: PageServerLoad = async ({ params }) => {
 			topArtists: [],
 			topTracks: [],
 			user: await Promise.resolve(getUser()),
-			weeklyAlbumChart: [],
-			weeklyArtistChart: [],
-			weeklyChartList: [],
-			weeklyTrackChart: []
+			weeklyAlbumChart: await Promise.resolve(),
+			weeklyArtistChart: await Promise.resolve(),
+			weeklyChartList: await Promise.resolve(),
+			weeklyTrackChart: await Promise.resolve(getWeeklyTrackChart('10'))
 		}
 	};
 };

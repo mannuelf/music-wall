@@ -18,11 +18,19 @@
 		});
 	};
 </script>
+
 <section>
-	<form method="post" on:submit|preventDefault={handleSubmit}>
-		<label for="username">LastFm username</label>
-		<input bind:value={searchQuery} type="text" name="search" placeholder="Type lastFm username" />
-		<button>GET MY STATS</button>
+	<form method="post" on:submit|preventDefault={handleSubmit} class="grid grid-cols-2 gap-4">
+		<label for="username" class="label"
+			> <span class="hidden">Enter username</span>
+			<input
+				bind:value={searchQuery}
+				class="input"
+				type="text"
+				name="search"
+				placeholder="Type lastFm username"
+			/>
+			</label
+		><button class="btn variant-filled-primary w-40">GET MY STATS</button>
 	</form>
 </section>
-<h1>LastFm</h1>
