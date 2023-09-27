@@ -1,17 +1,25 @@
 <script lang="ts">
-	import AlbumCard from '$lib/components/albumCard/AlbumCard.svelte';
+	import AlbumCard from '$lib/components/trackCard/TrackCard.svelte';
 	import ArtistCard from '$lib/components/artistCard/ArtistCard.svelte';
 	import LoadingIcon from '$lib/components/loadingIcon/LoadingIcon.svelte';
 	import fallBackImage from '$lib/images/default-img.svg';
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
+	import TrackCard from '$lib/components/trackCard/TrackCard.svelte';
+	import TopAlbumCard from '$lib/components/topAlbumCard/TopAlbumCard.svelte';
 
 	export let data: PageData;
 
-	$: user = data.streamed.user.user;
 	$: artists = data.streamed.artists.topartists.artist;
-	$: recentTracks = data.streamed.recentTracks.recenttracks.track;
 	$: lovedTracks = data.streamed.lovedTracks.lovedtracks.track;
+	$: recentTracks = data.streamed.recentTracks.recenttracks.track;
+	$: topAlbums = data.streamed.topAlbums.topalbums.album;
+	$: topArtists = data.streamed.topArtists.topartists.artist;
+	$: topTracks = data.streamed.topTracks.toptracks.track;
+	$: user = data.streamed.user.user;
+	$: weeklyAlbumChart = data.streamed.weeklyAlbumChart.weeklyalbumchart.album;
+	$: weeklyArtistChart = data.streamed.weeklyArtistChart.weeklyartistchart.artist;	
+	$: weeklyChartList = data.streamed.weeklyChartList.weeklychartlist.chart;
 	$: weeklyTrackCharts = data.streamed.weeklyTrackChart.weeklytrackchart.track;
 
 	function handleImage(image: string) {
@@ -47,13 +55,28 @@
 	</section>
 
 	<section>
+		<h2>Top Albums</h2>
+		{#await topAlbums}
+			<LoadingIcon />
+		{:then topAlbums}
+			<div class="grid">
+				{#each topAlbums as album}
+					<TopAlbumCard {album} />
+				{/each}
+			</div>
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</section>
+
+	<section>
 		<h2>Loved Tracks</h2>
 		{#await lovedTracks}
 			<LoadingIcon />
 		{:then lovedTracks}
 			<div class="grid">
 				{#each lovedTracks as track}
-					<AlbumCard {track} />
+					<TrackCard {track} />
 				{/each}
 			</div>
 		{:catch error}

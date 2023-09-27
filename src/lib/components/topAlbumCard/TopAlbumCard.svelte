@@ -1,8 +1,8 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
-	import type { Artist, Image } from 'lastfm-nodejs-client/@types';
+	import type { Album, Image, Track } from 'lastfm-nodejs-client/@types';
 
-	export let artist: Artist;
+	export let album: Album;
 
 	function handleCoverArt(images: Image[]): string {
 		if (images.length === 0) return fallBackImage;
@@ -15,22 +15,26 @@
 </script>
 
 <article class="card">
-	{#if artist.image}
-		<img src={handleCoverArt(artist.image)} alt={artist.name} loading="lazy" />
+	{#if album.image}
+		<img src={handleCoverArt(album.image)} alt={album.name} loading="lazy" />
 	{/if}
 	<div class="card-content">
-		{#if artist.name}<h3>{artist.name}</h3>{/if}
-		{#if artist.url}
-			<div class="card-content-info">
-				<a href={artist.url} target="_blank"> Find out more </a>
-			</div>
-		{/if}
+		{#if album['#text']}{album['#text']}{/if}
+		{#if album.name}<h3>{album.name}</h3>{/if}
+		<div class="card-content-info">
+			<p>
+				{#if album.artist}{album.artist['#text']} <br />{/if}
+				{#if album.album}{album.album['#text']}{/if}
+			</p>
+			{#if album.url}<a href={album.url} target="_blank">Find out more</a>{/if}
+		</div>
 	</div>
 </article>
 
 <style>
 	.card {
-		width: 220px;
+		width: 100%;
+		max-width: 220px;
 		height: 220px;
 		overflow: hidden;
 		cursor: pointer;

@@ -3,8 +3,13 @@ import LastFmApi from 'lastfm-nodejs-client';
 import type {
 	LoveTracksResponse,
 	RecentTracksResponse,
+	TopAlbumsResponse,
 	TopArtistsResponse,
+	TopTrackResponse,
 	UserResponse,
+	WeeklyAlbumChartResponse,
+	WeeklyArtistChartResponse,
+	WeeklyChartListResponse,
 	WeeklyTrackChartResponse
 } from 'lastfm-nodejs-client/dist/@types';
 import type { PageServerLoad } from './$types';
@@ -12,6 +17,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ params }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
+	const demoData = '5';
 
 	if (params.username) {
 		config.username = params.username;
@@ -26,17 +32,17 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getTopArtists = async (limit: string): Promise<TopArtistsResponse> => {
+	const getLovedTracks = async (limit: string): Promise<LoveTracksResponse> => {
 		try {
-			return await lastFm.getTopArtists(
-				method.user.getTopArtists,
+			return await lastFm.getLovedTracks(
+				method.user.getLovedTracks,
 				config.username,
 				'overall',
 				limit
 			);
 		} catch (err) {
 			console.log(err);
-			throw error(404, `no artists found not found`);
+			throw error(404, `no loved tracks found not found`);
 		}
 	};
 
@@ -54,17 +60,77 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getLovedTracks = async (limit: string): Promise<LoveTracksResponse> => {
+	const getTopArtists = async (limit: string): Promise<TopArtistsResponse> => {
 		try {
-			return await lastFm.getLovedTracks(
-				method.user.getLovedTracks,
+			return await lastFm.getTopArtists(
+				method.user.getTopArtists,
 				config.username,
 				'overall',
 				limit
 			);
 		} catch (err) {
 			console.log(err);
-			throw error(404, `no loved tracks found not found`);
+			throw error(404, `no artists found not found`);
+		}
+	};
+
+	const getTopAlbums = async (limit: string): Promise<TopAlbumsResponse> => {
+		try {
+			return await lastFm.getTopAlbums(method.user.getTopAlbums, config.username, 'overall', limit);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no top tracks found not found`);
+		}
+	};
+
+	const getTopTracks = async (limit: string): Promise<TopTrackResponse> => {
+		try {
+			return await lastFm.getTopTracks(method.user.getTopTracks, config.username, 'overall', limit);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no top tracks found not found`);
+		}
+	};
+
+	const getWeeklyAlbumChart = async (limit: string): Promise<WeeklyAlbumChartResponse> => {
+		try {
+			return await lastFm.getWeeklyAlbumChart(
+				method.user.getWeeklyAlbumChart,
+				config.username,
+				'overall',
+				limit
+			);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no found not found`);
+		}
+	};
+
+	const getWeeklyArtistChart = async (limit: string): Promise<WeeklyArtistChartResponse> => {
+		try {
+			return await lastFm.getWeeklyArtistChart(
+				method.user.getWeeklyArtistChart,
+				config.username,
+				'overall',
+				limit
+			);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no weekly artist chart found not found`);
+		}
+	};
+
+	const getWeekelyChartList = async (limit: string): Promise<WeeklyChartListResponse> => {
+		try {
+			return await lastFm.getWeeklyChartList(
+				method.user.getWeeklyChartList,
+				config.username,
+				'overall',
+				limit
+			);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `no weekly chart list found not found`);
 		}
 	};
 
@@ -84,17 +150,17 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	return {
 		streamed: {
-			artists: await Promise.resolve(getTopArtists('10')),
-			lovedTracks: await Promise.resolve(getLovedTracks('10')),
-			recentTracks: await Promise.resolve(getRecentTracks('10')),
-			topAlbums: [],
-			topArtists: [],
-			topTracks: [],
+			artists: await Promise.resolve(getTopArtists(demoData)),
+			lovedTracks: await Promise.resolve(getLovedTracks(demoData)),
+			recentTracks: await Promise.resolve(getRecentTracks(demoData)),
+			topAlbums: await Promise.resolve(getTopAlbums(demoData)),
+			topArtists: await Promise.resolve(getTopArtists(demoData)),
+			topTracks: await Promise.resolve(getTopTracks(demoData)),
 			user: await Promise.resolve(getUser()),
-			weeklyAlbumChart: await Promise.resolve(),
-			weeklyArtistChart: await Promise.resolve(),
-			weeklyChartList: await Promise.resolve(),
-			weeklyTrackChart: await Promise.resolve(getWeeklyTrackChart('10'))
+			weeklyAlbumChart: await Promise.resolve(getWeeklyAlbumChart(demoData)),
+			weeklyArtistChart: await Promise.resolve(getWeeklyArtistChart(demoData)),
+			weeklyChartList: await Promise.resolve(getWeekelyChartList(demoData)),
+			weeklyTrackChart: await Promise.resolve(getWeeklyTrackChart(demoData))
 		}
 	};
 };
