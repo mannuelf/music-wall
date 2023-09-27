@@ -11,13 +11,13 @@ import type {
 	WeeklyArtistChartResponse,
 	WeeklyChartListResponse,
 	WeeklyTrackChartResponse
-} from 'lastfm-nodejs-client/dist/@types';
+} from 'lastfm-nodejs-client/@types';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
-	const demoData = '5';
+	const demoData = '50';
 
 	if (params.username) {
 		config.username = params.username;
