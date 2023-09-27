@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import LastFmApi from 'lastfm-nodejs-client';
+const LastFmApi = (await import('lastfm-nodejs-client')).default;
 import type {
 	LoveTracksResponse,
 	RecentTracksResponse,
