@@ -1,8 +1,8 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
-	import type { Album, Image, Track } from 'lastfm-nodejs-client/@types';
+	import type { Album, Image, TopAlbums, Track } from 'lastfm-nodejs-client/@types';
 
-	export let album: Album;
+	export let album: TopAlbums['topalbums']['album'];
 
 	function handleCoverArt(images: Image[]): string {
 		if (images.length === 0) return fallBackImage;

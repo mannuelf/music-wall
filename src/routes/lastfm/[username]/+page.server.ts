@@ -150,7 +150,6 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	return {
 		streamed: {
-			artists: await Promise.resolve(getTopArtists(demoData)),
 			lovedTracks: await Promise.resolve(getLovedTracks(demoData)),
 			recentTracks: await Promise.resolve(getRecentTracks(demoData)),
 			topAlbums: await Promise.resolve(getTopAlbums(demoData)),

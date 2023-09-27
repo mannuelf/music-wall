@@ -1,8 +1,8 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
-	import type { Album, Image, Track } from 'lastfm-nodejs-client/@types';
+	import type { Image, TopTracks, Track } from 'lastfm-nodejs-client/@types';
 
-	export let track: Track;
+	export let track: TopTracks['toptracks']['track'];
 
 	function handleCoverArt(images: Image[]): string {
 		if (images.length === 0) return fallBackImage;
@@ -15,7 +15,7 @@
 </script>
 
 <article class="card">
-	{#if track.image}
+	{#if track && track.image}
 		<img src={handleCoverArt(track.image)} alt={track.name} loading="lazy" />
 	{/if}
 	<div class="card-content">

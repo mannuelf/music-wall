@@ -1,16 +1,15 @@
 <script lang="ts">
-	import AlbumCard from '$lib/components/trackCard/TrackCard.svelte';
 	import ArtistCard from '$lib/components/artistCard/ArtistCard.svelte';
 	import LoadingIcon from '$lib/components/loadingIcon/LoadingIcon.svelte';
+	import TrackCard from '$lib/components/trackCard/TrackCard.svelte';
 	import fallBackImage from '$lib/images/default-img.svg';
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
-	import TrackCard from '$lib/components/trackCard/TrackCard.svelte';
+	import AlbumCard from '$lib/components/albumCard/AlbumCard.svelte';
 	import TopAlbumCard from '$lib/components/topAlbumCard/TopAlbumCard.svelte';
 
 	export let data: PageData;
 
-	$: artists = data.streamed.artists.topartists.artist;
 	$: lovedTracks = data.streamed.lovedTracks.lovedtracks.track;
 	$: recentTracks = data.streamed.recentTracks.recenttracks.track;
 	$: topAlbums = data.streamed.topAlbums.topalbums.album;
@@ -18,7 +17,7 @@
 	$: topTracks = data.streamed.topTracks.toptracks.track;
 	$: user = data.streamed.user.user;
 	$: weeklyAlbumChart = data.streamed.weeklyAlbumChart.weeklyalbumchart.album;
-	$: weeklyArtistChart = data.streamed.weeklyArtistChart.weeklyartistchart.artist;	
+	$: weeklyArtistChart = data.streamed.weeklyArtistChart.weeklyartistchart.artist;
 	$: weeklyChartList = data.streamed.weeklyChartList.weeklychartlist.chart;
 	$: weeklyTrackCharts = data.streamed.weeklyTrackChart.weeklytrackchart.track;
 
@@ -55,6 +54,36 @@
 	</section>
 
 	<section>
+		<h2>Top Tracks</h2>
+		{#await topTracks}
+			<LoadingIcon />
+		{:then topTracks}
+			<div class="grid">
+				{#each topTracks as track}
+					<TrackCard {track} />
+				{/each}
+			</div>
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</section>
+
+	<section>
+		<h2>Top Artists</h2>
+		{#await topArtists}
+			<LoadingIcon />
+		{:then topArtists}
+			<div class="grid">
+				{#each topArtists as artist}
+					<ArtistCard {artist} />
+				{/each}
+			</div>
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</section>
+
+	<section>
 		<h2>Top Albums</h2>
 		{#await topAlbums}
 			<LoadingIcon />
@@ -68,6 +97,8 @@
 			<p>{error.message}</p>
 		{/await}
 	</section>
+
+	<hr>
 
 	<section>
 		<h2>Loved Tracks</h2>
@@ -91,7 +122,7 @@
 		{:then recentTracks}
 			<div class="grid">
 				{#each recentTracks as track}
-					<AlbumCard {track} />
+					<TrackCard {track} />
 				{/each}
 			</div>
 		{:catch error}
@@ -106,7 +137,7 @@
 		{:then weeklyTrackCharts}
 			<div class="grid">
 				{#each weeklyTrackCharts as track}
-					<AlbumCard {track} />
+					<TrackCard {track} />
 				{/each}
 			</div>
 		{:catch error}
@@ -115,13 +146,13 @@
 	</section>
 
 	<section>
-		<h2>Top Artists</h2>
-		{#await artists}
+		<h2>Weekly Album Charts</h2>
+		{#await weeklyAlbumChart}
 			<LoadingIcon />
-		{:then artists}
+		{:then weeklyAlbumChart}
 			<div class="grid">
-				{#each artists as artist}
-					<ArtistCard {artist} />
+				{#each weeklyAlbumChart as album}
+					<AlbumCard {album} />
 				{/each}
 			</div>
 		{:catch error}

@@ -1,31 +1,30 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
-	import type { Album, Image, Track } from 'lastfm-nodejs-client/@types';
+	import type { Image, WeeklyAlbum } from 'lastfm-nodejs-client/@types';
 
-	export let track: Track;
-
+	export let album: WeeklyAlbum;
 	function handleCoverArt(images: Image[]): string {
 		if (images.length === 0) return fallBackImage;
 		return images
 			.map((image) => {
 				if (image.size === 'large') return image['#text'];
 			})
-			.join('');
+		.join('');
 	}
 </script>
 
 <article class="card">
-	{#if track.image}
-		<img src={handleCoverArt(track.image)} alt={track.name} loading="lazy" />
+	{#if album.image}
+		<img src={handleCoverArt(album.image)} alt={album.name} loading="lazy" />
 	{/if}
 	<div class="card-content">
-		{#if track.name}<h3>{track.name}</h3>{/if}
+		{#if album.name}<h3>{album.name}</h3>{/if}
 		<div class="card-content-info">
 			<p>
-				{#if track.artist}{track.artist['#text']} <br />{/if}
-				{#if track.album}{track.album['#text']}{/if}
+				{#if album.artist}{album.artist['#text']} <br />{/if}
+				{#if album.album}{album.album['#text']}{/if}
 			</p>
-			{#if track.url}<a href={track.url} target="_blank">Find out more</a>{/if}
+			{#if album.url}<a href={album.url} target="_blank">Find out more</a>{/if}
 		</div>
 	</div>
 </article>
