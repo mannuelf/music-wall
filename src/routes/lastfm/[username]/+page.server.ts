@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
 	const getUser = async (): Promise<UserResponse> => {
 		try {
-			return await fetch('./netlify/functions/getInfo').then((res) => res.json());
+			return await fetch('./netlify/netlify/functions/getInfo').then((res) => res.json());
 		} catch (err) {
 			console.log(err);
 			throw error(404, `User: ${config.username} not found`);
