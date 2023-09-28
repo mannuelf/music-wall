@@ -1,5 +1,5 @@
-import LastFmApi from 'lastfm-nodejs-client';
 import { error } from '@sveltejs/kit';
+import LastFmApi from 'lastfm-nodejs-client';
 import type { UserResponse } from 'lastfm-nodejs-client/@types';
 
 const handler = async () => {
