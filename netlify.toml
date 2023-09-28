@@ -6,7 +6,7 @@
 
 [functions]
 	directory = "netlify/functions"
-  external_node_modules = ["@netlify/functions"]
+  external_node_modules = ["@netlify/functions", "lastfm-nodejs-client"]
 
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
