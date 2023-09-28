@@ -14,7 +14,7 @@ import type {
 } from 'lastfm-nodejs-client/@types';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, fetch }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
 	const demoData = '50';
@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	const getUser = async (): Promise<UserResponse> => {
 		try {
-			return await lastFm.getInfo(method.user.getInfo, config.username);
+			return await fetch('./netlify/functions/getInfo').then((res) => res.json());
 		} catch (err) {
 			console.log(err);
 			throw error(404, `User: ${config.username} not found`);

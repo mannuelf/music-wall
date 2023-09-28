@@ -15,11 +15,13 @@ const handler = async (event, context) => {
 			throw error(404, `User: ${config.username} not found`);
 		}
 	};
-	let data = await getUser();
+
+	const data = await getUser();
+
 	return {
 		statusCode: 200,
 		body: JSON.stringify(data)
 	};
 };
 
-export { handler };
+export default handler;

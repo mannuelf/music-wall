@@ -1,20 +1,15 @@
+!.env.example
 .DS_Store
-node_modules
-/build
-/.svelte-kit
-/package
 .env
 .env.*
-!.env.example
+.netlify
+/.svelte-kit
+/build
+/netlify/functions/node_modules
+/package
+node_modules
+package-lock.json
+pnpm-lock.yaml
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-# Local Netlify folder
-.netlify
-
-# Ignore files for PNPM, NPM and YARN
-pnpm-lock.yaml
-package-lock.json
 yarn.lock
-
-functions/node_modules
