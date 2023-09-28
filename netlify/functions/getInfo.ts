@@ -1,14 +1,26 @@
-import { Handler } from '@netlify/functions';
+import LastFmApi from 'lastfm-nodejs-client';
+import { error } from '@sveltejs/kit';
+import type { UserResponse } from 'lastfm-nodejs-client/@types';
 
-const handler: Handler = async (event, context) => {
-	const { name = 'stranger' } = event.queryStringParameters;
+const handler = async () => {
+	const lastFm = LastFmApi();
+	const { config, method } = lastFm;
+
+	const getUser = async (): Promise<UserResponse> => {
+		try {
+			return await lastFm.getInfo(method.user.getInfo, config.username);
+		} catch (err) {
+			console.log(err);
+			throw error(404, `User: ${config.username} not found`);
+		}
+	};
+
+	const data = await getUser();
 
 	return {
 		statusCode: 200,
-		body: JSON.stringify({
-			message: `Hello, ${name}!`
-		})
+		body: JSON.stringify(data)
 	};
 };
 
-export { handler };
+export default handler;
