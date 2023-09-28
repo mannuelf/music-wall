@@ -3,7 +3,9 @@
   functions = "netlify/functions"
   publish = "build"
 
+
 [functions]
+	directory = "functions"
   external_node_modules = ["@netlify/functions"]
 
 [[plugins]]
