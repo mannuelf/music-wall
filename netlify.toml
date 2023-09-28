@@ -6,5 +6,5 @@
 [functions]
   external_node_modules = ["@netlify/functions"]
 
-[plugins]
+[[plugins]]
   package = "@netlify/plugin-functions-install-core"
