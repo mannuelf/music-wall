@@ -3,19 +3,19 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
-		"test": "npm run test:integration && npm run test:unit",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"dev": "vite dev",
 		"format": "prettier --plugin-search-dir . --write .",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"movevps": "rsync -avz --exclude '.git' --exclude 'node_modules' --exclude '.vscode' .  $HOME/workspace/themwebs-vps/musicwall/",
+		"preview": "vite preview",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"test": "npm run test:integration && npm run test:unit"
 	},
 	"dependencies": {
-		"@netlify/functions": "^2.1.0",
 		"lastfm-nodejs-client": "^1.4.3"
 	},
 	"devDependencies": {
