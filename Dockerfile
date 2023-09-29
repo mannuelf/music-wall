@@ -1,21 +1,18 @@
-FROM node:20.10.0-alpine3.10 AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+FROM node:20-alpine AS base
 WORKDIR /app
-
 COPY package*.json .
-COPY pnpm-lock.yaml .
+RUN npm ci
+COPY . .
+RUN npm run build
+RUN npm prune --production
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-
-FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run build
-
-FROM base
-COPY --from=prod-deps /app/node_modules /app/node_modules
-COPY --from=build /app/dist /app/dist
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=builder /app/build build/
+COPY --from=builder /app/node_modules node_modules/
+COPY package.json .
+COPY .env .
+ENV NODE_ENV=production
 EXPOSE 3000
-CMD [ "node", "build" ]
+
+CMD [ "node", "-r", "dotenv/config", "build" ]
