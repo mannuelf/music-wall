@@ -9,7 +9,7 @@
 		"dev": "vite dev",
 		"format": "prettier --plugin-search-dir . --write .",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"movevps": "rsync -avz --exclude '.git' --exclude 'node_modules' --exclude '.vscode' .  $HOME/workspace/themwebs-vps/musicwall/",
+		"movevps": "rsync -a --exclude '.git' --exclude 'node_modules' --exclude '.vscode' .  $HOME/workspace/themwebs-vps/musicwall/",
 		"preview": "vite preview",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
