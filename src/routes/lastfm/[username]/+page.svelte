@@ -10,17 +10,18 @@
 
 	export let data: PageData;
 
-	$: lovedTracks = data.streamed.lovedTracks.lovedtracks.track;
-	$: recentTracks = data.streamed.recentTracks.recenttracks.track;
-	$: topAlbums = data.streamed.topAlbums.topalbums.album;
-	$: topArtists = data.streamed.topArtists.topartists.artist;
-	$: topTracks = data.streamed.topTracks.toptracks.track;
-	$: user = data.streamed.user.user;
-	$: weeklyAlbumChart = data.streamed.weeklyAlbumChart.weeklyalbumchart.album;
-	$: weeklyArtistChart = data.streamed.weeklyArtistChart.weeklyartistchart.artist;
-	$: weeklyChartList = data.streamed.weeklyChartList.weeklychartlist.chart;
-	$: weeklyTrackCharts = data.streamed.weeklyTrackChart.weeklytrackchart.track;
-
+	// $: lovedTracks = data.streamed.lovedTracks.lovedtracks.track;
+	// $: recentTracks = data.streamed.recentTracks.recenttracks.track;
+	// $: topAlbums = data.streamed.topAlbums.topalbums.album;
+	// $: topArtists = data.streamed.topArtists.topartists.artist;
+	$: topTracks = data.streamed.topTracks;
+	console.log("🚀 ~ file: +page.svelte:18 ~ topTracks:", topTracks)
+	// $: user = data.streamed.user.user;
+	// $: weeklyAlbumChart = data.streamed.weeklyAlbumChart.weeklyalbumchart.album;
+	// $: weeklyArtistChart = data.streamed.weeklyArtistChart.weeklyartistchart.artist;
+	// $: weeklyChartList = data.streamed.weeklyChartList.weeklychartlist.chart;
+	// $: weeklyTrackCharts = data.streamed.weeklyTrackChart.weeklytrackchart.track;
+	$: thing = data.streamed.three;
 	function handleImage(image: string) {
 		if (image === '') return fallBackImage;
 		return image;
@@ -31,7 +32,7 @@
 	<section class="header hidden">
 		<h1>SCROBBLES</h1>
 	</section>
-
+	<!-- 
 	<section>
 		<h2 class="hidden">Profile</h2>
 		{#await user}
@@ -51,12 +52,24 @@
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}
-	</section>
+	</section> -->
 
 	<section>
 		<h2>Top Tracks</h2>
+
+		<p>
+			three:
+			{#await thing}
+				Loading...
+			{:then value}
+				{value}
+			{:catch error}
+				{error.message}
+			{/await}
+		</p>
+		<hr />
 		{#await topTracks}
-			<LoadingIcon />
+			Loading...
 		{:then topTracks}
 			<div class="grid">
 				{#each topTracks as track}
@@ -68,7 +81,7 @@
 		{/await}
 	</section>
 
-	<section>
+	<!-- <section>
 		<h2>Top Artists</h2>
 		{#await topArtists}
 			<LoadingIcon />
@@ -158,7 +171,7 @@
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}
-	</section>
+	</section> -->
 </section>
 
 <style>
