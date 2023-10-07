@@ -8,11 +8,12 @@ RUN npm prune --production
 
 FROM node:18
 WORKDIR /app
-COPY --from=builder /app/build build/
-COPY --from=builder /app/node_modules node_modules/
+COPY --from=base /app/build build/
+COPY --from=base /app/node_modules node_modules/
 COPY package.json ./
-COPY .env ./
+COPY --from=base /app/.env ./
+
 ENV NODE_ENV=production
 EXPOSE 3000
 
-CMD [ "node", "-r", "dotenv/config", "build" ]
+CMD [ "npm", "start" ]
