@@ -30,7 +30,7 @@
 
 <style>
 	.card {
-		width: 220px;
+		width: 100%;
 		height: 220px;
 		overflow: hidden;
 		cursor: pointer;
