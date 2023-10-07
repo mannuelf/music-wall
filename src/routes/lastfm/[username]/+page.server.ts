@@ -1,16 +1,15 @@
 import { error } from "@sveltejs/kit";
 import type {
-  LoveTracksResponse,
-  RecentTracksResponse,
-  TopAlbumsResponse,
-  TopArtistsResponse,
-  TopTrackResponse,
-  UserResponse,
-  WeeklyAlbumChartResponse,
-  WeeklyArtistChartResponse,
-  WeeklyChartListResponse,
-  WeeklyTrackChartResponse,
-} from "lastfm-nodejs-client/dist/@types";
+	LoveTracksResponse,
+	RecentTracksResponse,
+	TopAlbumsResponse,
+	TopArtistsResponse,
+	TopTrackResponse,
+	UserResponse,
+	WeeklyAlbumChartResponse,
+	WeeklyArtistChartResponse,
+	WeeklyTrackChartResponse
+} from 'lastfm-nodejs-client/dist/@types';
 import LastFmApi from "lastfm-nodejs-client";
 import type { PageServerLoad } from "./$types";
 
@@ -127,20 +126,6 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getWeekelyChartList = async (limit: string): Promise<WeeklyChartListResponse> => {
-		try {
-			return await lastFm.getWeeklyChartList(
-				method.user.getWeeklyChartList,
-				config.username,
-				'overall',
-				limit
-			);
-		} catch (err) {
-			console.log(err);
-			throw error(404, `no weekly chart list found not found`);
-		}
-	};
-
 	const getWeeklyTrackChart = async (limit: string): Promise<WeeklyTrackChartResponse> => {
 		try {
 			return await lastFm.getWeeklyTrackChart(
@@ -165,7 +150,6 @@ export const load: PageServerLoad = async ({ params }) => {
 			user: getUser(),
 			weeklyAlbumChart: getWeeklyAlbumChart(demoData),
 			weeklyArtistChart: getWeeklyArtistChart(demoData),
-			weeklyChartList: getWeekelyChartList(demoData),
 			weeklyTrackChart: getWeeklyTrackChart(demoData)
 		}
 	};

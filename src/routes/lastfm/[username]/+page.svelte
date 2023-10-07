@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ArtistCard from '$lib/components/artistCard/ArtistCard.svelte';
-	import LoadingIcon from '$lib/components/loadingIcon/LoadingIcon.svelte';
 	import TrackCard from '$lib/components/trackCard/TrackCard.svelte';
 	import fallBackImage from '$lib/images/default-img.svg';
 	import { Avatar } from '@skeletonlabs/skeleton';
@@ -35,9 +34,6 @@
 		(data) => data.weeklyartistchart.artist
 	);
 	$: weeklyArtistChartLength = weeklyArtistChart.then((data) => data.length);
-
-	$: weeklyChartList = data.streamed.weeklyChartList.then((data) => data.weeklychartlist.chart);
-	$: weeklyChartListLength = weeklyChartList.then((data) => data.length);
 
 	$: weeklyTrackCharts = data.streamed.weeklyTrackChart.then((data) => data.weeklytrackchart.track);
 	$: weeklyTrackChartsLength = weeklyTrackCharts.then((data) => data.length);
@@ -78,7 +74,7 @@
 		<h2>Weekly Artist Chart</h2>
 		{#await weeklyArtistChart}
 			<div class="grid gap-4">
-				<LoadingCardShell numCols={weeklyArtistChart} />
+				<LoadingCardShell numCols={weeklyArtistChartLength} />
 			</div>
 		{:then weeklyArtistChart}
 			<div class="grid">
@@ -202,23 +198,6 @@
 		{:then weeklyAlbumChart}
 			<div class="grid">
 				{#each weeklyAlbumChart as album}
-					<AlbumCard {album} />
-				{/each}
-			</div>
-		{:catch error}
-			<p>{error.message}</p>
-		{/await}
-	</section>
-
-	<section>
-		<h2>Weekly Chart List</h2>
-		{#await weeklyChartList}
-			<div class="grid gap-4">
-				<LoadingCardShell numCols={weeklyChartListLength} />
-			</div>
-		{:then weeklyChartList}
-			<div class="grid">
-				{#each weeklyChartList as album}
 					<AlbumCard {album} />
 				{/each}
 			</div>
