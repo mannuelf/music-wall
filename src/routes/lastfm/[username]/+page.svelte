@@ -77,7 +77,7 @@
 	<section>
 		<h2>Weekly Artist Chart</h2>
 		{#await weeklyArtistChart}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={weeklyArtistChart} />
 			</div>
 		{:then weeklyArtistChart}
@@ -94,7 +94,7 @@
 	<section>
 		<h2>Loved Tracks</h2>
 		{#await lovedTracks}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={lovedTracksLength} />
 			</div>
 		{:then lovedTracks}
@@ -111,7 +111,7 @@
 	<section>
 		<h2>Top Tracks</h2>
 		{#await topTracks}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={topTracksLength} />
 			</div>
 		{:then topTracks}
@@ -128,7 +128,7 @@
 	<section>
 		<h2>Top Artists</h2>
 		{#await topArtists}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={topArtistsLength} />
 			</div>
 		{:then topArtists}
@@ -145,7 +145,7 @@
 	<section>
 		<h2>Top Albums</h2>
 		{#await topAlbums}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={topAlbumsLength} />
 			</div>
 		{:then topAlbums}
@@ -162,7 +162,7 @@
 	<section>
 		<h2>Recent Tracks</h2>
 		{#await recentTracks}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={recentTracksLength} />
 			</div>
 		{:then recentTracks}
@@ -179,7 +179,7 @@
 	<section>
 		<h2>Weekly track charts</h2>
 		{#await weeklyTrackCharts}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={weeklyTrackChartsLength} />
 			</div>
 		{:then weeklyTrackCharts}
@@ -196,7 +196,7 @@
 	<section>
 		<h2>Weekly Album Charts</h2>
 		{#await weeklyAlbumChart}
-			<div class="grid">
+			<div class="grid gap-4">
 				<LoadingCardShell numCols={weeklyAlbumChartLength} />
 			</div>
 		{:then weeklyAlbumChart}
@@ -213,8 +213,8 @@
 	<section>
 		<h2>Weekly Chart List</h2>
 		{#await weeklyChartList}
-			<div class="grid">
-				<LoadingCardShell numCols={weeklyChartList} />
+			<div class="grid gap-4">
+				<LoadingCardShell numCols={weeklyChartListLength} />
 			</div>
 		{:then weeklyChartList}
 			<div class="grid">
