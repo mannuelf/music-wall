@@ -1,19 +1,13 @@
-FROM node:18 AS base
+FROM node:18-alpine AS musicwall
+
+LABEL Developers="Mannuel Ferreira"
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+
 COPY . .
+
+RUN npm install
 RUN npm run build
-RUN npm prune --production
+RUN rm -rf src/ static/
 
-FROM node:18
-WORKDIR /app
-COPY --from=base /app/build build/
-COPY --from=base /app/node_modules node_modules/
-COPY package.json ./
-COPY --from=base /app/.env ./
-
-ENV NODE_ENV=production
-EXPOSE 3000
-
-CMD [ "npm", "start" ]
+CMD ["node","build"]

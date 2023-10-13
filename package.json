@@ -16,9 +16,6 @@
 		"test:unit": "vitest",
 		"test": "npm run test:integration && npm run test:unit"
 	},
-	"dependencies": {
-		"lastfm-nodejs-client": "^1.4.5"
-	},
 	"devDependencies": {
 		"@playwright/test": "^1.38.1",
 		"@skeletonlabs/skeleton": "2.2.0",
@@ -32,7 +29,6 @@
 		"@typescript-eslint/eslint-plugin": "^6.7.4",
 		"@typescript-eslint/parser": "^6.7.4",
 		"autoprefixer": "10.4.16",
-		"bun-types": "1.0.4-canary.20231004T140131",
 		"eslint": "^8.50.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.34.0",
@@ -52,5 +48,8 @@
 	"module": "index.ts",
 	"volta": {
 		"node": "18.18.0"
+	},
+	"dependencies": {
+		"lastfm-nodejs-client": "^1.5.0"
 	}
 }
