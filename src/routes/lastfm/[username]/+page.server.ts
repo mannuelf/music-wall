@@ -9,15 +9,14 @@ import type {
 	UserResponse,
 	WeeklyAlbumChartResponse,
 	WeeklyArtistChartResponse,
-	WeeklyChartListResponse,
 	WeeklyTrackChartResponse
-} from 'lastfm-nodejs-client/@types';
+} from 'lastfm-nodejs-client/dist/@types/lastfm.types';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
+export const load: PageServerLoad = async ({ params }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
-	const demoData = '50';
+	const demoData = '10';
 
 	if (params.username) {
 		config.username = params.username;
@@ -120,20 +119,6 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		}
 	};
 
-	const getWeekelyChartList = async (limit: string): Promise<WeeklyChartListResponse> => {
-		try {
-			return await lastFm.getWeeklyChartList(
-				method.user.getWeeklyChartList,
-				config.username,
-				'overall',
-				limit
-			);
-		} catch (err) {
-			console.log(err);
-			throw error(404, `no weekly chart list found not found`);
-		}
-	};
-
 	const getWeeklyTrackChart = async (limit: string): Promise<WeeklyTrackChartResponse> => {
 		try {
 			return await lastFm.getWeeklyTrackChart(
@@ -150,16 +135,15 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
 	return {
 		streamed: {
-			lovedTracks: await Promise.resolve(getLovedTracks(demoData)),
-			recentTracks: await Promise.resolve(getRecentTracks(demoData)),
-			topAlbums: await Promise.resolve(getTopAlbums(demoData)),
-			topArtists: await Promise.resolve(getTopArtists(demoData)),
-			topTracks: await Promise.resolve(getTopTracks(demoData)),
-			user: await Promise.resolve(getUser()),
-			weeklyAlbumChart: await Promise.resolve(getWeeklyAlbumChart(demoData)),
-			weeklyArtistChart: await Promise.resolve(getWeeklyArtistChart(demoData)),
-			weeklyChartList: await Promise.resolve(getWeekelyChartList(demoData)),
-			weeklyTrackChart: await Promise.resolve(getWeeklyTrackChart(demoData))
+			lovedTracks: getLovedTracks(demoData),
+			recentTracks: getRecentTracks(demoData),
+			topAlbums: getTopAlbums(demoData),
+			topArtists: getTopArtists(demoData),
+			topTracks: getTopTracks(demoData),
+			user: getUser(),
+			weeklyAlbumChart: getWeeklyAlbumChart(demoData),
+			weeklyArtistChart: getWeeklyArtistChart(demoData),
+			weeklyTrackChart: getWeeklyTrackChart(demoData)
 		}
 	};
 };
