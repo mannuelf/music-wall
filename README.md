@@ -2,8 +2,6 @@
 
 [music-wall.netlify.app](https://music-wall.netlify.app)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/2346553d-969a-494e-94db-5b91cdaff7cc/deploy-status)](https://app.netlify.com/sites/music-wall/deploys)
-
 View and navigate your listening habits from spotify and lastfm.
 
 ```bash
