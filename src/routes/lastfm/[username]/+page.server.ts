@@ -28,7 +28,6 @@ export const load: PageServerLoad = async ({ params }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
 
-	console.log('⚙️ ', period, limit);
 	if (params.username) {
 		config.username = params.username;
 	}

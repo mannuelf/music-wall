@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Analytics from '$lib/analytics.svelte';
 	import Navigation from '$lib/components/navigation/Navigation.svelte';
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
@@ -6,7 +7,6 @@
 
 <!-- App Shell -->
 <AppShell>
-
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
@@ -22,4 +22,6 @@
 	<section class="p-4">
 		<slot><!-- optional fallback --></slot>
 	</section>
+
+	<Analytics />
 </AppShell>
