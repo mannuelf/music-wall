@@ -1,6 +1,6 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
-	import type { Image, WeeklyAlbum } from 'lastfm-nodejs-client/@types';
+	import type { Image, WeeklyAlbum } from 'lastfm-nodejs-client/dist/@types/lastfm.types';
 
 	export let album: WeeklyAlbum;
 	function handleCoverArt(images: Image[]): string {
@@ -9,7 +9,7 @@
 			.map((image) => {
 				if (image.size === 'large') return image['#text'];
 			})
-		.join('');
+			.join('');
 	}
 </script>
 

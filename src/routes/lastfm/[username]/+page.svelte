@@ -44,26 +44,68 @@
 	}
 </script>
 
-<section class="flex flex-col">
-	<section class="header hidden">
-		<h1>SCROBBLES</h1>
-	</section>
-
-	<section>
+<section class="grid">
+	<div>
 		<h2 class="hidden">Profile</h2>
 		{#await user}
 			loading...
 		{:then user}
-			<div class="flex flex-col">
-				<div>
-					<h1>{user.realname}</h1>
-					<p>{user.country}</p>
-				</div>
+			<div class="grid">
 				<div><Avatar src={handleImage(user.image[3]['#text'])} alt={user.name} size="large" /></div>
 				<div>
-					<p>{user.playcount}</p>
-					<a href={user.url} target="_blank">My Profile</a>
+					<h1 class="font-bold">{user.realname}</h1>
+					<p>{user.country}</p>
 				</div>
+				<div>
+					<p><span class="text-primary-500 font-bold">{user.playcount}</span> plays</p>
+					<a href={user.url} target="_blank">LastFm Profile ↗️ </a>
+				</div>
+			</div>
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</div>
+	<div>
+		<form method="POST" class="grid content-center">
+			<label for="limit" class="label self-end">
+				<span>Limit <i class="text-primary-300 text-sm">(amount of pictures to show)</i></span>
+				<input autocomplete="off" name="limit" type="text" placeholder="10" class="input" />
+			</label>
+			<label for="period" class="self-end">
+				<span>Period</span>
+				<select name="period" id="period" class="select">
+					<option value="7" selected>7 Days</option>
+					<option value="14">14 Days</option>
+					<option value="30">30 Days</option>
+					<option value="60">60 Days</option>
+					<option value="90">90 Days</option>
+					<option value="120">120 Days</option>
+					<option value="180">180 Days</option>
+					<option value="360">360 Days</option>
+				</select>
+			</label>
+			<label class="self-end">
+				<button class="btn btn-m variant-filled-primary">SUBMIT</button>
+			</label>
+		</form>
+	</div>
+</section>
+
+<section class="flex flex-col">
+	<section class="header hidden">
+		<h1>SCROBBLES</h1>
+	</section>
+	<section>
+		<h2>Recent Tracks</h2>
+		{#await recentTracks}
+			<div class="grid gap-4">
+				<LoadingCardShell numCols={recentTracksLength} />
+			</div>
+		{:then recentTracks}
+			<div class="grid">
+				{#each recentTracks as track}
+					<TrackCard {track} />
+				{/each}
 			</div>
 		{:catch error}
 			<p>{error.message}</p>
@@ -148,23 +190,6 @@
 			<div class="grid">
 				{#each topAlbums as album}
 					<TopAlbumCard {album} />
-				{/each}
-			</div>
-		{:catch error}
-			<p>{error.message}</p>
-		{/await}
-	</section>
-
-	<section>
-		<h2>Recent Tracks</h2>
-		{#await recentTracks}
-			<div class="grid gap-4">
-				<LoadingCardShell numCols={recentTracksLength} />
-			</div>
-		{:then recentTracks}
-			<div class="grid">
-				{#each recentTracks as track}
-					<TrackCard {track} />
 				{/each}
 			</div>
 		{:catch error}

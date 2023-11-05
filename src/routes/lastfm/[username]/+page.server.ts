@@ -13,11 +13,22 @@ import type {
 } from 'lastfm-nodejs-client/dist/@types/lastfm.types';
 import type { PageServerLoad } from './$types';
 
+let limit = '10';
+let period = '7';
+
+export const actions = {
+	default: async ({ request }) => {
+		const data = await request.formData();
+		limit = data.get('limit');
+		period = data.get('period');
+	}
+};
+
 export const load: PageServerLoad = async ({ params }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
-	const demoData = '10';
 
+	console.log('⚙️ ', period, limit);
 	if (params.username) {
 		config.username = params.username;
 	}
@@ -31,12 +42,12 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getLovedTracks = async (limit: string): Promise<LoveTracksResponse> => {
+	const getLovedTracks = async (period: string, limit: string): Promise<LoveTracksResponse> => {
 		try {
 			return await lastFm.getLovedTracks(
 				method.user.getLovedTracks,
 				config.username,
-				'overall',
+				period,
 				limit
 			);
 		} catch (err) {
@@ -45,12 +56,12 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getRecentTracks = async (limit: string): Promise<RecentTracksResponse> => {
+	const getRecentTracks = async (period: string, limit: string): Promise<RecentTracksResponse> => {
 		try {
 			return await lastFm.getRecentTracks(
 				method.user.getRecentTracks,
 				config.username,
-				'overall',
+				period,
 				limit
 			);
 		} catch (err) {
@@ -59,44 +70,42 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getTopArtists = async (limit: string): Promise<TopArtistsResponse> => {
+	const getTopArtists = async (period: string, limit: string): Promise<TopArtistsResponse> => {
 		try {
-			return await lastFm.getTopArtists(
-				method.user.getTopArtists,
-				config.username,
-				'overall',
-				limit
-			);
+			return await lastFm.getTopArtists(method.user.getTopArtists, config.username, period, limit);
 		} catch (err) {
 			console.log(err);
 			throw error(404, `no artists found not found`);
 		}
 	};
 
-	const getTopAlbums = async (limit: string): Promise<TopAlbumsResponse> => {
+	const getTopAlbums = async (period: string, limit: string): Promise<TopAlbumsResponse> => {
 		try {
-			return await lastFm.getTopAlbums(method.user.getTopAlbums, config.username, 'overall', limit);
+			return await lastFm.getTopAlbums(method.user.getTopAlbums, config.username, period, limit);
 		} catch (err) {
 			console.log(err);
 			throw error(404, `no top tracks found not found`);
 		}
 	};
 
-	const getTopTracks = async (limit: string): Promise<TopTrackResponse> => {
+	const getTopTracks = async (period: string, limit: string): Promise<TopTrackResponse> => {
 		try {
-			return await lastFm.getTopTracks(method.user.getTopTracks, config.username, 'overall', limit);
+			return await lastFm.getTopTracks(method.user.getTopTracks, config.username, period, limit);
 		} catch (err) {
 			console.log(err);
 			throw error(404, `no top tracks found not found`);
 		}
 	};
 
-	const getWeeklyAlbumChart = async (limit: string): Promise<WeeklyAlbumChartResponse> => {
+	const getWeeklyAlbumChart = async (
+		period: string,
+		limit: string
+	): Promise<WeeklyAlbumChartResponse> => {
 		try {
 			return await lastFm.getWeeklyAlbumChart(
 				method.user.getWeeklyAlbumChart,
 				config.username,
-				'overall',
+				period,
 				limit
 			);
 		} catch (err) {
@@ -105,12 +114,15 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getWeeklyArtistChart = async (limit: string): Promise<WeeklyArtistChartResponse> => {
+	const getWeeklyArtistChart = async (
+		period: string,
+		limit: string
+	): Promise<WeeklyArtistChartResponse> => {
 		try {
 			return await lastFm.getWeeklyArtistChart(
 				method.user.getWeeklyArtistChart,
 				config.username,
-				'overall',
+				period,
 				limit
 			);
 		} catch (err) {
@@ -119,12 +131,15 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
-	const getWeeklyTrackChart = async (limit: string): Promise<WeeklyTrackChartResponse> => {
+	const getWeeklyTrackChart = async (
+		period: string,
+		limit: string
+	): Promise<WeeklyTrackChartResponse> => {
 		try {
 			return await lastFm.getWeeklyTrackChart(
 				method.user.getWeeklyTrackChart,
 				config.username,
-				'overall',
+				period,
 				limit
 			);
 		} catch (err) {
@@ -135,15 +150,15 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	return {
 		streamed: {
-			lovedTracks: getLovedTracks(demoData),
-			recentTracks: getRecentTracks(demoData),
-			topAlbums: getTopAlbums(demoData),
-			topArtists: getTopArtists(demoData),
-			topTracks: getTopTracks(demoData),
+			lovedTracks: getLovedTracks(period, limit),
+			recentTracks: getRecentTracks(period, limit),
+			topAlbums: getTopAlbums(period, limit),
+			topArtists: getTopArtists(period, limit),
+			topTracks: getTopTracks(period, limit),
 			user: getUser(),
-			weeklyAlbumChart: getWeeklyAlbumChart(demoData),
-			weeklyArtistChart: getWeeklyArtistChart(demoData),
-			weeklyTrackChart: getWeeklyTrackChart(demoData)
+			weeklyAlbumChart: getWeeklyAlbumChart(period, limit),
+			weeklyArtistChart: getWeeklyArtistChart(period, limit),
+			weeklyTrackChart: getWeeklyTrackChart(period, limit)
 		}
 	};
 };
