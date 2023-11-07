@@ -1,6 +1,6 @@
 <script lang="ts">
 	import fallBackImage from '$lib/images/default-img.svg';
-	import type { Artist, Image } from 'lastfm-nodejs-client/@types';
+	import type { Artist, Image } from 'lastfm-nodejs-client/dist/lastfm.types';
 
 	export let artist: Artist;
 
@@ -31,7 +31,7 @@
 <style>
 	.card {
 		width: 100%;
-		height: 220px;
+		height: 240px;
 		overflow: hidden;
 		cursor: pointer;
 		position: relative;

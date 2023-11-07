@@ -34,7 +34,7 @@
 <style>
 	.card {
 		width: 100%;
-		height: 220px;
+		height: 240px;
 		overflow: hidden;
 		cursor: pointer;
 		position: relative;
