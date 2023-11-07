@@ -19,8 +19,8 @@
 	$: topAlbums = data.streamed.topAlbums.then((data) => data.topalbums.album);
 	$: topAlbumsLength = topAlbums.then((data) => data.length);
 
-	$: topArtists = data.streamed.topArtists.then((data) => data.topartists.artist);
-	$: topArtistsLength = topArtists.then((data) => data.length);
+	$: topArtists = data.streamed.topArtists;
+	$: topArtistsLength = 10;
 
 	$: topTracks = data.streamed.topTracks.then((data) => data.toptracks.track);
 	$: topTracksLength = topTracks.then((data) => data.length);

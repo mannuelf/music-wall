@@ -147,17 +147,30 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	};
 
+	const lovedTracks = getLovedTracks(period, limit);
+	const recentTracks = getRecentTracks(period, limit);
+	const topAlbums = getTopAlbums(period, limit);
+	const topArtists = getTopArtists(period, limit).then((data) => data.topartists.artist);
+
+	const topTracks = getTopTracks(period, limit);
+	const user = getUser();
+	const weeklyAlbumChart = getWeeklyAlbumChart(period, limit);
+	const weeklyArtistChart = getWeeklyArtistChart(period, limit);
+	const weeklyTrackChart = getWeeklyTrackChart(period, limit);
+
+	console.log('🤖 topArtist:', await topArtists);
+
 	return {
 		streamed: {
-			lovedTracks: getLovedTracks(period, limit),
-			recentTracks: getRecentTracks(period, limit),
-			topAlbums: getTopAlbums(period, limit),
-			topArtists: getTopArtists(period, limit),
-			topTracks: getTopTracks(period, limit),
-			user: getUser(),
-			weeklyAlbumChart: getWeeklyAlbumChart(period, limit),
-			weeklyArtistChart: getWeeklyArtistChart(period, limit),
-			weeklyTrackChart: getWeeklyTrackChart(period, limit)
+			lovedTracks: lovedTracks,
+			recentTracks: recentTracks,
+			topAlbums: topAlbums,
+			topArtists: topArtists,
+			topTracks: topTracks,
+			user: user,
+			weeklyAlbumChart: weeklyAlbumChart,
+			weeklyArtistChart: weeklyArtistChart,
+			weeklyTrackChart: weeklyTrackChart
 		}
 	};
 };
