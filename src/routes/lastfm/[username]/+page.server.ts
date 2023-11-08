@@ -1,6 +1,10 @@
 import { error } from '@sveltejs/kit';
 import LastFmApi from 'lastfm-nodejs-client';
+import { defined } from '$lib/defined';
+import { FANART_TV } from '$lib/fanarttv/fanarttv';
+import type { Artistbackground, FanArtArtistResponse } from '$lib/fanarttv/fanarttv.types';
 import type {
+	Artist,
 	LoveTracksResponse,
 	RecentTracksResponse,
 	TopAlbumsResponse,
@@ -24,7 +28,7 @@ export const actions = {
 	}
 };
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, fetch }) => {
 	const lastFm = LastFmApi();
 	const { config, method } = lastFm;
 
@@ -150,7 +154,53 @@ export const load: PageServerLoad = async ({ params }) => {
 	const lovedTracks = getLovedTracks(period, limit);
 	const recentTracks = getRecentTracks(period, limit);
 	const topAlbums = getTopAlbums(period, limit);
-	const topArtists = getTopArtists(period, limit).then((data) => data.topartists.artist);
+	const topArtists = await getTopArtists(period, limit).then((data) => data.topartists.artist);
+	const topArtistMbid: string[] = await topArtists.map((artist: Artist) => artist.mbid);
+	/**
+	 * Get and set data for Top Artist Grid
+	 */
+	const fanartTvResponses = await Promise.allSettled(
+		topArtistMbid.map(async (mbId) => {
+			if (!mbId) {
+				return;
+			}
+			const res = await fetch(`${FANART_TV.base_url}${mbId}?api_key=${FANART_TV.api_key}`);
+
+			if (res.status === 200) {
+				//				console.log('🤖 res:', await res.json());
+				return await res.json();
+			}
+			return await {
+				...res.json()
+			};
+		})
+	);
+	const fanArtTvResult: FanArtArtistResponse[] = fanartTvResponses
+		.map(({ value }: any) => {
+			return value;
+		})
+		.filter(defined);
+
+	const getTopArtistImage = (mbid: string): string => {
+		if (!mbid) return '';
+		let imageUrl = '';
+		fanArtTvResult.find((artist) => {
+			console.log('🤖 artist:', artist);
+			if (artist.mbid_id === mbid) {
+				artist.artistbackground?.map((artistBackground: Artistbackground) => {
+					imageUrl = artistBackground.url;
+				});
+			}
+		});
+		return imageUrl;
+	};
+
+	const topArtistsWithImages = topArtists.map((artist: Artist) => {
+		return {
+			...artist,
+			image: getTopArtistImage(artist.mbid)
+		};
+	});
 
 	const topTracks = getTopTracks(period, limit);
 	const user = getUser();
@@ -158,14 +208,14 @@ export const load: PageServerLoad = async ({ params }) => {
 	const weeklyArtistChart = getWeeklyArtistChart(period, limit);
 	const weeklyTrackChart = getWeeklyTrackChart(period, limit);
 
-	console.log('🤖 topArtist:', await topArtists);
+	//	console.log('🤖 topArtist:', topArtistsWithImages);
 
 	return {
 		streamed: {
 			lovedTracks: lovedTracks,
 			recentTracks: recentTracks,
 			topAlbums: topAlbums,
-			topArtists: topArtists,
+			topArtists: topArtistsWithImages,
 			topTracks: topTracks,
 			user: user,
 			weeklyAlbumChart: weeklyAlbumChart,

@@ -3,20 +3,11 @@
 	import type { Artist, Image } from 'lastfm-nodejs-client/dist/lastfm.types';
 
 	export let artist: Artist;
-
-	function handleCoverArt(images: Image[]): string {
-		if (images.length === 0) return fallBackImage;
-		return images
-			.map((image) => {
-				if (image.size === 'large') return image['#text'];
-			})
-			.join('');
-	}
 </script>
 
 <article class="card">
 	{#if artist.image}
-		<img src={handleCoverArt(artist.image)} alt={artist.name} loading="lazy" />
+		<img src={artist.image} alt={artist.name} loading="lazy" />
 	{/if}
 	<div class="card-content">
 		{#if artist.name}<h3>{artist.name}</h3>{/if}
