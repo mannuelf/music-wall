@@ -16,7 +16,7 @@
 
 <article class="card">
 	{#if track && track.image}
-		<img src={handleCoverArt(track.image)} alt={track.name} loading="lazy" />
+		<img src={track.image} alt={track.name} loading="lazy" />
 	{/if}
 	<div class="card-content">
 		{#if track.name}<h3>{track.name}</h3>{/if}

@@ -15,7 +15,7 @@
 
 <article class="card">
 	{#if album.image}
-		<img src={handleCoverArt(album.image)} alt={album.name} loading="lazy" />
+		<img src={album.image} alt={album.name} loading="lazy" />
 	{/if}
 	<div class="card-content">
 		{#if album.name}<h3>{album.name}</h3>{/if}

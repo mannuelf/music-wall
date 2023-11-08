@@ -10,33 +10,31 @@
 
 	export let data: PageData;
 
-	$: lovedTracks = data.streamed.lovedTracks.then((data) => data.lovedtracks.track);
-	$: lovedTracksLength = lovedTracks.then((data) => data.length);
+	$: lovedTracks = data.streamed.lovedTracks;
+	$: lovedTracksLength = lovedTracks;
 
-	$: recentTracks = data.streamed.recentTracks.then((data) => data.recenttracks.track);
-	$: recentTracksLength = recentTracks.then((data) => data.length);
+	$: recentTracks = data.streamed.recentTracks;
+	$: recentTracksLength = recentTracks;
 
-	$: topAlbums = data.streamed.topAlbums.then((data) => data.topalbums.album);
-	$: topAlbumsLength = topAlbums.then((data) => data.length);
+	$: topAlbums = data.streamed.topAlbums;
+	$: topAlbumsLength = topAlbums;
 
 	$: topArtists = data.streamed.topArtists;
 	$: topArtistsLength = 10;
 
-	$: topTracks = data.streamed.topTracks.then((data) => data.toptracks.track);
-	$: topTracksLength = topTracks.then((data) => data.length);
+	$: topTracks = data.streamed.topTracks;
+	$: topTracksLength = topTracks;
 
 	$: user = data.streamed.user.then((data) => data.user);
 
-	$: weeklyAlbumChart = data.streamed.weeklyAlbumChart.then((data) => data.weeklyalbumchart.album);
-	$: weeklyAlbumChartLength = weeklyAlbumChart.then((data) => data.length);
+	$: weeklyAlbumChart = data.streamed.weeklyAlbumChart;
+	$: weeklyAlbumChartLength = weeklyAlbumChart;
 
-	$: weeklyArtistChart = data.streamed.weeklyArtistChart.then(
-		(data) => data.weeklyartistchart.artist
-	);
-	$: weeklyArtistChartLength = weeklyArtistChart.then((data) => data.length);
+	$: weeklyArtistChart = data.streamed.weeklyArtistChart;
+	$: weeklyArtistChartLength = weeklyArtistChart;
 
-	$: weeklyTrackCharts = data.streamed.weeklyTrackChart.then((data) => data.weeklytrackchart.track);
-	$: weeklyTrackChartsLength = weeklyTrackCharts.then((data) => data.length);
+	$: weeklyTrackCharts = data.streamed.weeklyTrackChart;
+	$: weeklyTrackChartsLength = weeklyTrackCharts;
 
 	function handleImage(image: string) {
 		if (image === '') return fallBackImage;
