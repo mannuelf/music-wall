@@ -1,6 +1,7 @@
 # Music WALL
 
-[music-wall.netlify.app](https://music-wall.netlify.app)
+[https://musicwall.themwebs.me/lastfm/](https://musicwall.themwebs.me/lastfm/)
+[https://musicwall.themwebs.me/spotify/](https://musicwall.themwebs.me/spotify/)
 
 View and navigate your listening habits from spotify and lastfm.
 
